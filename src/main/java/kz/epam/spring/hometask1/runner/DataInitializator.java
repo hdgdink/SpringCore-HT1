@@ -11,7 +11,8 @@ public class DataInitializator {
         User user = new User();
         user.setFirstName("Vovka");
         user.setLastName("Pupkin");
-        user.setEmail("asd@asd.tr");
+        user.setEmail("asd@asd.asd");
+        user.setPass("123");
         userService.save(user);
     }
 }

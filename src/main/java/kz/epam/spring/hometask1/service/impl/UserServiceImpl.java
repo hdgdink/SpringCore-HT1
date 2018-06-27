@@ -5,15 +5,15 @@ import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.UserService;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class UserServiceImpl implements UserService {
     private UserDaoImpl userDao = new UserDaoImpl();
 
-    @Nullable
     @Override
     public User getUserByEmail(@Nonnull String email) {
+       // System.out.println("USERSERVICE: " + email);
+        //System.out.println("USERSERVICE: " + userDao.getUserByEmail(email));
         return userDao.getUserByEmail(email);
     }
 

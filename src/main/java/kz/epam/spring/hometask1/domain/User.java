@@ -11,6 +11,16 @@ public class User extends DomainObject {
     private String email;
     private Role role;
 
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    private String pass;
+
     public User() {
         setId(ThreadLocalRandom.current().nextLong(0, 100));
         setRole(Role.CLIENT);
@@ -67,22 +77,25 @@ public class User extends DomainObject {
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 role == user.role &&
+                Objects.equals(pass, user.pass) &&
                 Objects.equals(tickets, user.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, role, tickets);
+
+        return Objects.hash(firstName, lastName, email, role, pass, tickets);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "ID='" + getId()+ '\'' +
+                "Id = '" + getId() + '\'' +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
+                ", pass='" + pass + '\'' +
                 ", tickets=" + tickets +
                 '}';
     }
