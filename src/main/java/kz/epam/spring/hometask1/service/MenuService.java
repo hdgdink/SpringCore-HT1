@@ -121,11 +121,10 @@ public class MenuService {
 
     private void showEventListMenu() {
         System.out.println("----------------Events----------------");
-
+        System.out.println("-please login or signin for buy ticket-");
         for (Event event: eventAction.showAllEvents())
         System.out.println(event);
-
-
+        System.out.println("--------------------------------------");
 
         if (isLogged)
             System.out.println("--a.Buy ticket");
@@ -135,11 +134,14 @@ public class MenuService {
         while (!isChoosen) {
             checkEventMenuInput(scanner.next());
         }
-
     }
 
     private void BuyTicketMenu() {
+        Long eventId;
         System.out.println("----------------Buy ticket----------------");
+        System.out.println("-----------Enter number of event----------");
+        eventId = scanner.nextLong();
+
     }
 
 

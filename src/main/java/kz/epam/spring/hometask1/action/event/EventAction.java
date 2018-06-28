@@ -9,10 +9,13 @@ import java.util.Collection;
 public class EventAction {
     private EventService eventService = new EventServiceImpl();
 
-    public Collection<Event> showAllEvents(){
-
-
+    public Collection<Event> showAllEvents() {
         return eventService.getAll();
+    }
+
+    public Event buyTicket(Long eventId) {
+        Event event = null;
+        return event;
     }
 
 
