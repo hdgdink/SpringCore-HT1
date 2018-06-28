@@ -6,7 +6,7 @@ import kz.epam.spring.hometask1.domain.User;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserDaoImpl implements Dao<User> {
+public class UserDao implements Dao<User> {
     private static Map<Long, User> users = new HashMap<>();
 
     @Override
@@ -22,13 +22,7 @@ public class UserDaoImpl implements Dao<User> {
 
     @Override
     public User getById(Long id) {
-        User user = null;
-
-        if (id != null) {
-            user = users.get(id);
-        }
-
-        return user;
+        return users.get(id);
     }
 
 

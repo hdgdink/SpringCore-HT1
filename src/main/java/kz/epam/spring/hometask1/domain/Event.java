@@ -3,6 +3,7 @@ package kz.epam.spring.hometask1.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Event extends DomainObject {
     private String name;
@@ -10,6 +11,10 @@ public class Event extends DomainObject {
     private double basePrice;
     private EventRating rating;
     private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
+
+    public Event() {
+        setId(ThreadLocalRandom.current().nextLong(0, 100));
+    }
 
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
@@ -170,7 +175,11 @@ public class Event extends DomainObject {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name, airDates, basePrice, rating, auditoriums);
+    }
+
+    @Override
+    public String toString() {
+        return "Event #" + getId() + " " + name + ", basePrice=" + basePrice + ", rating=" + rating;
     }
 }

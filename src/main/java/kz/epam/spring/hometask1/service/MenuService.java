@@ -1,18 +1,27 @@
 package kz.epam.spring.hometask1.service;
 
-import kz.epam.spring.hometask1.action.menu.LogInAction;
+import kz.epam.spring.hometask1.action.event.EventAction;
+import kz.epam.spring.hometask1.action.user.LogInAction;
+import kz.epam.spring.hometask1.action.user.SignAction;
+import kz.epam.spring.hometask1.domain.Event;
+import kz.epam.spring.hometask1.domain.User;
+import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
 
 import java.util.Scanner;
 
 public class MenuService {
     private Scanner scanner = new Scanner(System.in);
     private LogInAction logInAction = new LogInAction();
+    private SignAction signAction = new SignAction();
+    private EventAction eventAction = new EventAction();
+    private User loggedUser;
     private boolean isChoosen;
     private boolean isLogged;
 
     public void showMainMenu() {
         if (!isLogged)
             System.out.println("-------------Welcome to Cinema----------------");
+        else System.out.println("Welcome " + loggedUser.getFirstName());
 
         System.out.println("----------------------------------------------");
         System.out.println("------------------Main Menu-------------------");
@@ -44,51 +53,84 @@ public class MenuService {
             email = scanner.next();
 
             if (!logInAction.checkEmail(email)) {
-                moveBackCheck(email);
+                moveBackLogInMenuCheck(email);
             }
 
             System.out.println("---------Enter your password---------");
             pass = scanner.next();
 
-            if (logInAction.logIn(email, pass)) {
+            loggedUser = logInAction.logIn(email, pass);
+
+            if (loggedUser.getEmail() != null) {
                 isLogged = true;
                 showMainMenu();
-            } else showLogInMenu();
+            } else {
+                showLogInMenu();
+                loggedUser = null;
+            }
 
         }
 
     }
 
-    private void moveBackCheck(String email) {
-        if (email.equals("q")) {
+    private void moveBackLogInMenuCheck(String email) {
+        if (email.equals("q"))
             showMainMenu();
-        } else showLogInMenu();
+        else showLogInMenu();
     }
 
     private void showSignInMenu() {
+        String email;
+        String firstName;
+        String lastName;
+        String pass1;
+        String pass2;
+
         System.out.println("----------------SignIn----------------");
         System.out.println("----please enter you personal info----");
+        System.out.println("--(ot type 'q' to back to main menu)--");
         System.out.println("----------(* - required data)---------");
+
         System.out.println("--*Enter your Email");
-        scanner.next();
+        email = scanner.next();
 
-    }
+        if (!signAction.checkRegisteredEmail(email)) showSignInMenu();
 
-    private void BuyTicketMenu() {
-        System.out.println("----------------Buy ticket----------------");
-    }
+        if (email.equals("q")) showMainMenu();
 
-    private void showAllEventsMenu() {
-        System.out.println("----------------All events today----------------");
+        System.out.println("--Enter your first name");
+        firstName = scanner.next();
+
+        System.out.println("--Enter your last name");
+        lastName = scanner.next();
+
+        System.out.println("--Enter password");
+        pass1 = scanner.next();
+
+        System.out.println("--Confirm password");
+        pass2 = scanner.next();
+
+        if (!signAction.checkPass(pass1, pass2)) {
+            showSignInMenu();
+        }
+
+        loggedUser = signAction.createUser(email, firstName, lastName, pass1);
+        isLogged = true;
+        showMainMenu();
     }
 
     private void showEventListMenu() {
         System.out.println("----------------Events----------------");
-        System.out.println("--a.Show All");
+
+        for (Event event: eventAction.showAllEvents())
+        System.out.println(event);
+
+
 
         if (isLogged)
-            System.out.println("--b.Buy ticket");
-        System.out.println("--c.Back to main menu");
+            System.out.println("--a.Buy ticket");
+
+        System.out.println("--b.Back to main menu");
 
         while (!isChoosen) {
             checkEventMenuInput(scanner.next());
@@ -96,15 +138,17 @@ public class MenuService {
 
     }
 
+    private void BuyTicketMenu() {
+        System.out.println("----------------Buy ticket----------------");
+    }
+
+
     private void checkEventMenuInput(String next) {
         switch (next) {
             case "a":
-                showAllEventsMenu();
-                break;
-            case "b":
                 BuyTicketMenu();
                 break;
-            case "c":
+            case "b":
                 showMainMenu();
                 break;
             default:
@@ -130,6 +174,7 @@ public class MenuService {
                 break;
             case "d":
                 isLogged = false;
+                loggedUser = null;
                 showMainMenu();
             default:
                 System.out.println("Incorrect input");

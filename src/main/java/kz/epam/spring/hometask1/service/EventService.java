@@ -5,7 +5,7 @@ import kz.epam.spring.hometask1.domain.Event;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public interface EventService {
+public interface EventService extends AbstractDomainService<Event>{
     /**
      * Finding event by name
      *

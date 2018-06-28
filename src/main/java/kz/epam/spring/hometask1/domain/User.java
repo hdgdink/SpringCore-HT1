@@ -10,6 +10,9 @@ public class User extends DomainObject {
     private String lastName;
     private String email;
     private Role role;
+    private String pass;
+    private Double balance;
+    private NavigableSet<Ticket> tickets = new TreeSet<>();
 
     public String getPass() {
         return pass;
@@ -19,11 +22,10 @@ public class User extends DomainObject {
         this.pass = pass;
     }
 
-    private String pass;
-
     public User() {
         setId(ThreadLocalRandom.current().nextLong(0, 100));
         setRole(Role.CLIENT);
+        setBalance(0.0);
     }
 
     public Role getRole() {
@@ -33,8 +35,6 @@ public class User extends DomainObject {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    private NavigableSet<Ticket> tickets = new TreeSet<>();
 
     public String getFirstName() {
         return firstName;
@@ -83,7 +83,6 @@ public class User extends DomainObject {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(firstName, lastName, email, role, pass, tickets);
     }
 
@@ -98,5 +97,13 @@ public class User extends DomainObject {
                 ", pass='" + pass + '\'' +
                 ", tickets=" + tickets +
                 '}';
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }

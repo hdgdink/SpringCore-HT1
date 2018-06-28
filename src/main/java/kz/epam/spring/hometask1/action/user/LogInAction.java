@@ -1,4 +1,4 @@
-package kz.epam.spring.hometask1.action.menu;
+package kz.epam.spring.hometask1.action.user;
 
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.UserService;
@@ -18,16 +18,16 @@ public class LogInAction {
             return true;
     }
 
-    public Boolean logIn(String email, String pass) {
+    public User logIn(String email, String pass) {
         User loggedUser;
         loggedUser = userService.getUserByEmail(email);
 
         if (loggedUser.getPass().equals(pass)) {
-            System.out.println("Welcome " + loggedUser.getFirstName());
-            return true;
+            return loggedUser;
         } else {
             System.out.println("Incorrect password, try again");
-            return false;
+            loggedUser.setEmail(null);
+            return loggedUser;
         }
     }
 }

@@ -9,16 +9,32 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class EventServiceImpl implements EventService {
+    private EventDao eventDao = new EventDao();
+
     @Nullable
     @Override
     public Event getByName(@Nonnull String name) {
-        return null;
+        return eventDao.getEventByName(name);
     }
 
+    @Override
+    public Event save(@Nonnull Event object) {
+        return eventDao.addObject(object);
+    }
+
+    @Override
+    public void remove(@Nonnull Event object) {
+        eventDao.removeObject(object);
+    }
+
+    @Override
+    public Event getById(@Nonnull Long id) {
+        return eventDao.getById(id);
+    }
+
+    @Nonnull
+    @Override
     public Collection<Event> getAll() {
-        Collection<Event> eventList;
-        EventDao eventDao = new EventDao();
-        eventList = eventDao.getAll();
-        return eventList;
+        return eventDao.getAll();
     }
 }

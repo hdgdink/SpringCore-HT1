@@ -1,6 +1,6 @@
 package kz.epam.spring.hometask1.service.impl;
 
-import kz.epam.spring.hometask1.dao.impl.UserDaoImpl;
+import kz.epam.spring.hometask1.dao.impl.UserDao;
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.UserService;
 
@@ -8,12 +8,10 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 
 public class UserServiceImpl implements UserService {
-    private UserDaoImpl userDao = new UserDaoImpl();
+    private UserDao userDao = new UserDao();
 
     @Override
     public User getUserByEmail(@Nonnull String email) {
-       // System.out.println("USERSERVICE: " + email);
-        //System.out.println("USERSERVICE: " + userDao.getUserByEmail(email));
         return userDao.getUserByEmail(email);
     }
 
