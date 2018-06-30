@@ -14,7 +14,7 @@ public class Auditorium extends DomainObject {
     private int rowCount;
     private Set<Long> vipSeats = Collections.emptySet();
 
-    public Auditorium(String name, long numberOfSeats,  int rowCount, Set<Long> vipSeats) {
+    public Auditorium(String name, long numberOfSeats, int rowCount, Set<Long> vipSeats) {
         setId(ThreadLocalRandom.current().nextLong(0, 100));
         this.name = name;
         this.rowCount = rowCount;
@@ -80,5 +80,11 @@ public class Auditorium extends DomainObject {
 
     public void setRowCount(int rowCount) {
         this.rowCount = rowCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Auditorium " + name + ", number Of Seats=" + numberOfSeats + ", row count=" + rowCount +
+                ", vip Seats=" + vipSeats;
     }
 }

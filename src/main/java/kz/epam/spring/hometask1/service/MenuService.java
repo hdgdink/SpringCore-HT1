@@ -5,7 +5,6 @@ import kz.epam.spring.hometask1.action.user.LogInAction;
 import kz.epam.spring.hometask1.action.user.SignAction;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
 
 import java.util.Scanner;
 
@@ -122,8 +121,9 @@ public class MenuService {
     private void showEventListMenu() {
         System.out.println("----------------Events----------------");
         System.out.println("-please login or signin for buy ticket-");
-        for (Event event: eventAction.showAllEvents())
-        System.out.println(event);
+
+        for (Event event : eventAction.showAllEvents())
+            System.out.println(event);
         System.out.println("--------------------------------------");
 
         if (isLogged)
@@ -136,11 +136,39 @@ public class MenuService {
         }
     }
 
-    private void BuyTicketMenu() {
+    private void buyTicketMenu() {
         Long eventId;
+        Event choosenEvent;
         System.out.println("----------------Buy ticket----------------");
         System.out.println("-----------Enter number of event----------");
+
+
         eventId = scanner.nextLong();
+        choosenEvent = eventAction.buyTicket(eventId);
+
+        if (choosenEvent != null) {
+            showVariantsMenu(choosenEvent);
+        } else {
+            System.out.println("You entered an incorrect event number, try again");
+            buyTicketMenu();
+        }
+    }
+
+    private void showVariantsMenu(Event event) {
+        System.out.println("------Dates and location of the event-----");
+        System.out.println("--Enter the number of the available option--");
+        System.out.println("-or press q to return to the previous menu--");
+        int i = 0;
+
+
+        for (Object dates : eventAction.showDates(event)) {
+            i++;
+            System.out.println(i + " " + dates);
+        }
+
+        System.out.println("Enter the position of the interesting date");
+        scanner.nextLine();
+
 
     }
 
@@ -148,7 +176,7 @@ public class MenuService {
     private void checkEventMenuInput(String next) {
         switch (next) {
             case "a":
-                BuyTicketMenu();
+                buyTicketMenu();
                 break;
             case "b":
                 showMainMenu();

@@ -7,7 +7,7 @@ import java.io.IOException;
 public class App {
 
     public static void main(String[] args) throws IOException {
-        DataInitializator initData = new DataInitializator();
+        DataInitializer initData = new DataInitializer();
         initData.initData();
        // UserService userService = new UserServiceImpl();
        // System.out.println("All users: " + userService.getAll());

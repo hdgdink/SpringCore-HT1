@@ -17,7 +17,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DataInitializator {
+public class DataInitializer {
     private UserService userService = new UserServiceImpl();
     private EventService eventService = new EventServiceImpl();
 
