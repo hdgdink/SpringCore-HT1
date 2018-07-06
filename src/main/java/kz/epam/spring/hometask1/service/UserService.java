@@ -5,7 +5,7 @@ import kz.epam.spring.hometask1.domain.User;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public interface UserService extends AbstractDomainService<User> {
+public interface UserService {
     /**
      * Finding user by email
      *

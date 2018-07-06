@@ -5,6 +5,62 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
+    <bean id="auditoriumDao" class="kz.epam.spring.hometask1.dao.impl.AuditoriumDao"/>
+    <bean id="eventDao" class="kz.epam.spring.hometask1.dao.impl.EventDao"/>
+    <bean id="ticketDao" class="kz.epam.spring.hometask1.dao.impl.TicketDao"/>
+    <bean id="userDao" class="kz.epam.spring.hometask1.dao.impl.UserDao"/>
+
+
+    <bean id="bookingService" class="kz.epam.spring.hometask1.service.impl.BookingServiceImpl">
+        <constructor-arg ref="ticketDao"/>
+        <constructor-arg ref="userDao"/>
+    </bean>
+
+    <bean id="auditoriumService" class="kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl">
+        <constructor-arg ref="auditoriumDao"/>
+    </bean>
+
+
+
+    <bean id="discountService" class="kz.epam.spring.hometask1.service.impl.DiscountServiceImpl"/>
+
+    <bean id="eventService" class="kz.epam.spring.hometask1.service.impl.EventServiceImpl">
+        <constructor-arg ref="eventDao"/>
+        <constructor-arg ref="ticketDao"/>
+    </bean>
+
+    <bean id="userService" class="kz.epam.spring.hometask1.service.impl.UserServiceImpl">
+        <constructor-arg ref="userDao"/>
+    </bean>
+
+
+    <bean id="logInAction" class="kz.epam.spring.hometask1.action.user.LogInAction">
+        <constructor-arg ref="userService"/>
+    </bean>
+
+    <bean id="signAction" class="kz.epam.spring.hometask1.action.user.SignAction">
+        <constructor-arg ref="userService"/>
+    </bean>
+
+    <bean id="eventAction" class="kz.epam.spring.hometask1.action.event.EventAction">
+        <constructor-arg ref="bookingService"/>
+        <constructor-arg ref="eventService"/>
+    </bean>
+
+
+    <bean id="dataInitializer" class="kz.epam.spring.hometask1.runner.DataInitializer">
+        <constructor-arg ref="eventService"/>
+        <constructor-arg ref="userService"/>
+        <constructor-arg ref="auditoriumService"/>
+    </bean>
+
+
+    <bean id="menuService" class="kz.epam.spring.hometask1.service.impl.MenuServiceImpl">
+        <constructor-arg ref="signAction"/>
+        <constructor-arg ref="logInAction"/>
+        <constructor-arg ref="eventAction"/>
+    </bean>
+
 
 
 </beans>

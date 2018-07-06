@@ -1,15 +1,14 @@
 package kz.epam.spring.hometask1.runner;
 
-import kz.epam.spring.hometask1.dao.impl.AuditoriumDao;
 import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.EventRating;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.service.EventService;
-import kz.epam.spring.hometask1.service.UserService;
+import kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -17,17 +16,29 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DataInitializer {
-    private UserService userService = new UserServiceImpl();
-    private EventService eventService = new EventServiceImpl();
+class DataInitializer {
+    private UserServiceImpl userService;
+    private EventServiceImpl eventService;
+    private AuditoriumServiceImpl auditoriumService;
+    private final static String PATH_TO_PROPERTIES = "src/main/resources/auditoriums.properties";
+
+    public DataInitializer(UserServiceImpl userService, EventServiceImpl eventService, AuditoriumServiceImpl auditoriumService) {
+        this.userService = userService;
+        this.eventService = eventService;
+        this.auditoriumService = auditoriumService;
+    }
+
+    public DataInitializer() {
+    }
 
     void initData() {
         initUser("Vovka", "Pupkin", "asd@asd.asd", "123");
         initUser("Andrey", "Vass", "hdg", "456");
+        initUser("a", "a", "a", "a");
         initAuditoriums(1);
         initAuditoriums(2);
-        initEvent("Leninskie kuchi", 300.0, EventRating.HIGH);
-        initEvent("T-34", 300.0, EventRating.HIGH);
+        initEvent("Abay's way", 400.0, EventRating.HIGH);
+        initEvent("T-34", 300.0, EventRating.MID);
     }
 
     private void initUser(String firstName, String lastName, String email, String pass) {
@@ -41,17 +52,19 @@ public class DataInitializer {
     }
 
     private void initAuditoriums(Integer number) {
-        AuditoriumDao auditoriumDao = new AuditoriumDao();
         Properties properties = new Properties();
+        FileInputStream fileInputStream;
+
 
         try {
-            properties.load(getClass().getClassLoader().getResourceAsStream("auditoriums.properties"));
+            fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
+            properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         String name = properties.getProperty(number.toString() + ".Name");
-        int rowSize = Integer.valueOf(properties.getProperty(number.toString() + ".RowCount"));
+        int rowSize = Integer.valueOf(properties.getProperty(number.toString() + ".RowSize"));
         Long seats = Long.valueOf(properties.getProperty(number.toString() + ".SeatsCount"));
         String[] list = (properties.getProperty(number.toString() + ".VIPSeats")).split(",");
         Set<Long> vipSeats = new HashSet();
@@ -60,8 +73,8 @@ public class DataInitializer {
             vipSeats.add(Long.valueOf(seat));
         }
 
-        Auditorium auditorium = new Auditorium(name, seats, rowSize,vipSeats);
-        auditoriumDao.addObject(auditorium);
+        Auditorium auditorium = new Auditorium(name, seats, rowSize, vipSeats);
+        auditoriumService.addAuditorium(auditorium);
     }
 
 
@@ -80,7 +93,6 @@ public class DataInitializer {
     }
 
     private Auditorium getAuditorium(String name) {
-        AuditoriumDao auditoriumDao = new AuditoriumDao();
-        return auditoriumDao.getByName(name);
+        return auditoriumService.getByName(name);
     }
 }

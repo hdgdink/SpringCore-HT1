@@ -11,13 +11,13 @@ import java.util.stream.LongStream;
 public class Auditorium extends DomainObject {
     private String name;
     private long numberOfSeats;
-    private int rowCount;
+    private int rowSize;
     private Set<Long> vipSeats = Collections.emptySet();
 
     public Auditorium(String name, long numberOfSeats, int rowCount, Set<Long> vipSeats) {
         setId(ThreadLocalRandom.current().nextLong(0, 100));
         this.name = name;
-        this.rowCount = rowCount;
+        this.rowSize = rowCount;
         this.numberOfSeats = numberOfSeats;
         this.vipSeats = vipSeats;
     }
@@ -74,17 +74,17 @@ public class Auditorium extends DomainObject {
         return Objects.hash(name, numberOfSeats, vipSeats);
     }
 
-    public int getRowCount() {
-        return rowCount;
+    public int getRowSize() {
+        return rowSize;
     }
 
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
+    public void setRowSize(int rowSize) {
+        this.rowSize = rowSize;
     }
 
     @Override
     public String toString() {
-        return "Auditorium " + name + ", number Of Seats=" + numberOfSeats + ", row count=" + rowCount +
+        return "Auditorium " + name + ", number Of Seats=" + numberOfSeats + ", row count=" + rowSize +
                 ", vip Seats=" + vipSeats;
     }
 }

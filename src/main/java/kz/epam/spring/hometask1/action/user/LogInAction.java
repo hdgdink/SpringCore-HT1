@@ -1,15 +1,21 @@
 package kz.epam.spring.hometask1.action.user;
 
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.service.UserService;
+import kz.epam.spring.hometask1.runner.App;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
 
 public class LogInAction {
-    private UserService userService = new UserServiceImpl();
+    private UserServiceImpl userService ;
+
+    public LogInAction() {
+    }
+
+    public LogInAction(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     public Boolean checkEmail(String email) {
-        User user;
-        user = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
 
         if (user == null) {
             System.out.println("Incorrect username(email), try again");
@@ -19,13 +25,13 @@ public class LogInAction {
     }
 
     public User logIn(String email, String pass) {
-        User loggedUser;
-        loggedUser = userService.getUserByEmail(email);
+        User loggedUser = userService.getUserByEmail(email);
 
-        if (loggedUser.getPass().equals(pass)) {
+        if (loggedUser != null && loggedUser.getPass().equals(pass)) {
             return loggedUser;
         } else {
             System.out.println("Incorrect password, try again");
+            assert loggedUser != null;
             loggedUser.setEmail(null);
             return loggedUser;
         }

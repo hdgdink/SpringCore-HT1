@@ -44,4 +44,7 @@ public class UserDao implements Dao<User> {
         return user;
     }
 
+    public void setBalance(Long id, Double balance) {
+        users.get(id).setBalance(balance);
+    }
 }

@@ -1,0 +1,72 @@
+package kz.epam.spring.hometask1.service.impl;
+
+import kz.epam.spring.hometask1.dao.impl.TicketDao;
+import kz.epam.spring.hometask1.dao.impl.UserDao;
+import kz.epam.spring.hometask1.domain.Event;
+import kz.epam.spring.hometask1.domain.EventRating;
+import kz.epam.spring.hometask1.domain.Ticket;
+import kz.epam.spring.hometask1.domain.User;
+import kz.epam.spring.hometask1.runner.App;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.time.LocalDateTime;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class BookingServiceImpl implements kz.epam.spring.hometask1.service.BookingService {
+    private TicketDao ticketDao ;
+    private UserDao userDao ;
+
+    public BookingServiceImpl(TicketDao ticketDao, UserDao userDao) {
+        this.ticketDao = ticketDao;
+        this.userDao = userDao;
+    }
+
+    public BookingServiceImpl() {
+    }
+
+    @Override
+    public double getTicketPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user, @Nonnull Long seat) {
+        double price;
+        price = event.getBasePrice();
+
+        if (event.getAuditoriums().get(dateTime).getVipSeats().contains(seat))
+            price *= 2;
+
+        if (event.getRating().equals(EventRating.HIGH))
+            price *= 1.2;
+
+        if (event.getRating().equals(EventRating.LOW))
+            price *= 0.8;
+
+
+        return price;
+    }
+
+    @Override
+    public Boolean buyTicket(@Nonnull Ticket ticket, User user, Double finalPrice) {
+        if (user.getBalance() >= finalPrice) {
+            NavigableSet<Ticket> tickets = new TreeSet<>();
+            tickets.add(ticket);
+            user.setBalance(user.getBalance() - finalPrice);
+            user.setTickets(tickets);
+            ticketDao.addObject(ticket);
+            userDao.setBalance(user.getId(), user.getBalance());
+            System.out.println("You buy the ticket, you balance now is: " + user.getBalance());
+            return true;
+        } else {
+            System.out.println("Not enough money for buying the ticket");
+            return false;
+        }
+    }
+
+    @Nonnull
+    @Override
+    public Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull LocalDateTime dateTime) {
+        return null;
+    }
+
+
+}

@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 public class AuditoriumDao implements Dao<Auditorium> {
     private static Map<Long, Auditorium> auditoriums = new HashMap<>();
 
+    public AuditoriumDao() {
+    }
+
     @Override
     public Auditorium addObject(Auditorium auditorium) {
         return auditoriums.put(auditorium.getId(), auditorium);

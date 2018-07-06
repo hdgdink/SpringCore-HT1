@@ -1,15 +1,30 @@
 package kz.epam.spring.hometask1.service.impl;
 
 import kz.epam.spring.hometask1.dao.impl.EventDao;
+import kz.epam.spring.hometask1.dao.impl.TicketDao;
+import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
+import kz.epam.spring.hometask1.runner.App;
+import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.EventService;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
-public class EventServiceImpl implements EventService {
-    private EventDao eventDao = new EventDao();
+public class EventServiceImpl implements EventService, AbstractDomainService<Event> {
+    private EventDao eventDao;
+    private TicketDao ticketDao ;
+
+    public EventServiceImpl(EventDao eventDao, TicketDao ticketDao) {
+        this.eventDao = eventDao;
+        this.ticketDao = ticketDao;
+    }
+
+    public EventServiceImpl() {
+    }
 
     @Nullable
     @Override
@@ -36,5 +51,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public Collection<Event> getAll() {
         return eventDao.getAll();
+    }
+
+    public List getUsedSeats(Auditorium auditorium, Event event, LocalDateTime dateTime) {
+        return ticketDao.getUsedSeatsInAuditorium(auditorium.getName(), event, dateTime);
+    }
+
+    public Boolean checkBookedPlace(Auditorium auditorium, Event event, LocalDateTime dateTime, Long seatNumber) {
+        //continue;
+        return getUsedSeats(auditorium, event, dateTime).contains(seatNumber) &&
+                event.getAuditoriums().get(dateTime).equals(auditorium);
     }
 }
