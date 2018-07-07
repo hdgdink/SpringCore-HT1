@@ -31,11 +31,13 @@ public class TicketDao implements Dao<Ticket> {
         return tickets.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
     }
 
-    private List<Ticket> getTicketsByAuditorium(String auditoriumName, Event event, LocalDateTime dateTime) {
+    private List<Ticket> getTicketsByAuditorium(String auditoriumName, Event event) {
         List<Ticket> auditoriumTickets = new ArrayList<>();
 
         for (Ticket ticket : tickets.values()) {
-            if (ticket.getEvent().equals(event) && auditoriumName.equals(ticket.getEvent().getAuditoriums().get(ticket.getDateTime()).getName())) {
+
+            if (ticket.getEvent().equals(event) &&
+                    auditoriumName.equals(ticket.getEvent().getAuditoriums().get(ticket.getDateTime()).getName())) {
                 auditoriumTickets.add(ticket);
             }
         }
@@ -43,8 +45,8 @@ public class TicketDao implements Dao<Ticket> {
         return auditoriumTickets;
     }
 
-    public List<Long> getUsedSeatsInAuditorium(String name, Event event, LocalDateTime dateTime) {
-        List<Ticket> tickets = getTicketsByAuditorium(name, event, dateTime);
+    public List<Long> getUsedSeatsInAuditorium(String name, Event event) {
+        List<Ticket> tickets = getTicketsByAuditorium(name, event);
         List<Long> usedSeats = new ArrayList<>();
 
         for (Ticket ticket : tickets) {

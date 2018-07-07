@@ -53,7 +53,6 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         if (this == o) return true;
 
         if (o == null || getClass() != o.getClass()) return false;
-
         Ticket ticket = (Ticket) o;
         return seat == ticket.seat &&
                 Objects.equals(user, ticket.user) &&
@@ -84,4 +83,3 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         return result;
     }
 }
-

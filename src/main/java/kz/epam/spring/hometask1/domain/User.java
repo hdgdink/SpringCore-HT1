@@ -68,6 +68,14 @@ public class User extends DomainObject {
         this.tickets = tickets;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,12 +86,14 @@ public class User extends DomainObject {
                 Objects.equals(email, user.email) &&
                 role == user.role &&
                 Objects.equals(pass, user.pass) &&
+                Objects.equals(balance, user.balance) &&
                 Objects.equals(tickets, user.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, role, pass, tickets);
+
+        return Objects.hash(firstName, lastName, email, role, pass, balance, tickets);
     }
 
     @Override
@@ -99,11 +109,5 @@ public class User extends DomainObject {
                 '}';
     }
 
-    public Double getBalance() {
-        return balance;
-    }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
 }

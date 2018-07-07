@@ -4,7 +4,6 @@ import kz.epam.spring.hometask1.dao.impl.EventDao;
 import kz.epam.spring.hometask1.dao.impl.TicketDao;
 import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
-import kz.epam.spring.hometask1.runner.App;
 import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.EventService;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class EventServiceImpl implements EventService, AbstractDomainService<Event> {
     private EventDao eventDao;
-    private TicketDao ticketDao ;
+    private TicketDao ticketDao;
 
     public EventServiceImpl(EventDao eventDao, TicketDao ticketDao) {
         this.eventDao = eventDao;
@@ -53,13 +52,13 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
         return eventDao.getAll();
     }
 
-    public List getUsedSeats(Auditorium auditorium, Event event, LocalDateTime dateTime) {
-        return ticketDao.getUsedSeatsInAuditorium(auditorium.getName(), event, dateTime);
+    private List getUsedSeats(Auditorium auditorium, Event event) {
+        return ticketDao.getUsedSeatsInAuditorium(auditorium.getName(), event);
     }
 
     public Boolean checkBookedPlace(Auditorium auditorium, Event event, LocalDateTime dateTime, Long seatNumber) {
-        //continue;
-        return getUsedSeats(auditorium, event, dateTime).contains(seatNumber) &&
+        System.out.println(ticketDao.getAll());
+        return getUsedSeats(auditorium, event).contains(seatNumber) &&
                 event.getAuditoriums().get(dateTime).equals(auditorium);
     }
 }

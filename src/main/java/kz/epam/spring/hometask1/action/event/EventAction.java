@@ -1,11 +1,10 @@
 package kz.epam.spring.hometask1.action.event;
 
+import kz.epam.spring.hometask1.dao.impl.TicketDao;
 import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.Ticket;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.runner.App;
-import kz.epam.spring.hometask1.service.BookingService;
 import kz.epam.spring.hometask1.service.impl.BookingServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 
@@ -16,13 +15,13 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class EventAction {
-   private EventServiceImpl eventService;
+    private EventServiceImpl eventService;
     private BookingServiceImpl bookingService;
 
     public EventAction() {
     }
 
-    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService) {
+    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService ) {
         this.eventService = eventService;
         this.bookingService = bookingService;
     }
