@@ -1,6 +1,5 @@
 package kz.epam.spring.hometask1.action.user;
 
-import kz.epam.spring.hometask1.domain.Role;
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
 

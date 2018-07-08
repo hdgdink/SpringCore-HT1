@@ -6,7 +6,6 @@ import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.EventRating;
 import kz.epam.spring.hometask1.domain.Ticket;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.runner.App;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,12 +16,14 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class BookingServiceImpl implements kz.epam.spring.hometask1.service.BookingService {
-    private TicketDao ticketDao ;
-    private UserDao userDao ;
+    private TicketDao ticketDao;
+    private UserDao userDao;
+    private DiscountServiceImpl discountService;
 
-    public BookingServiceImpl(TicketDao ticketDao, UserDao userDao) {
+    public BookingServiceImpl(TicketDao ticketDao, UserDao userDao, DiscountServiceImpl discountService) {
         this.ticketDao = ticketDao;
         this.userDao = userDao;
+        this.discountService = discountService;
     }
 
     public BookingServiceImpl() {
@@ -48,6 +49,14 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
 
     @Override
     public Boolean buyTicket(@Nonnull Ticket ticket, User user, Double finalPrice) {
+        Byte discount = discountService.getDiscount(ticket.getUser(), ticket.getEvent(),
+                ticket.getDateTime(), ticket.getSeat());
+
+        if (discount > 0) {
+            System.out.println("You have discount: " + discount + "%");
+            finalPrice = finalPrice - finalPrice / 100 * discount;
+        }
+
         if (user.getBalance() >= finalPrice) {
             NavigableSet<Ticket> tickets = new TreeSet<>();
             tickets.add(ticket);
@@ -67,13 +76,13 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
     @Override
     public Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull LocalDateTime dateTime) {
         Set<Ticket> tickets = new HashSet<>();
-        for(Ticket ticket : ticketDao.getAll()){
-            if(ticket.getEvent().equals(event) && ticket.getDateTime().equals(dateTime)){
+
+        for (Ticket ticket : ticketDao.getAll()) {
+
+            if (ticket.getEvent().equals(event) && ticket.getDateTime().equals(dateTime)) {
                 tickets.add(ticket);
             }
         }
         return tickets;
     }
-
-
 }

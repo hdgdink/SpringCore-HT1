@@ -1,6 +1,5 @@
 package kz.epam.spring.hometask1.action.event;
 
-import kz.epam.spring.hometask1.dao.impl.TicketDao;
 import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.Ticket;
@@ -21,7 +20,7 @@ public class EventAction {
     public EventAction() {
     }
 
-    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService ) {
+    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService) {
         this.eventService = eventService;
         this.bookingService = bookingService;
     }
@@ -94,7 +93,8 @@ public class EventAction {
             System.out.println("Seat is busy");
             return false;
         } else {
-            System.out.println("Price of chosen tickets: " + bookingService.getTicketPrice(event, dateTime, loggedUser, seatNumber));
+            System.out.println("Price of chosen tickets: " + bookingService.getTicketPrice(event, dateTime,
+                    loggedUser, seatNumber));
             return true;
         }
     }

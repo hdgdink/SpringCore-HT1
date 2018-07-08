@@ -91,7 +91,6 @@ public class AdminAction {
         }
     }
 
-
     private boolean checkEmail(String email) {
         if (userService.getUserByEmail(email) != null) {
             System.out.println("Email is busy, input another");

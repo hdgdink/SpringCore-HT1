@@ -53,7 +53,6 @@ class DataInitializer {
         Properties properties = new Properties();
         FileInputStream fileInputStream;
 
-
         try {
             fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
             properties.load(fileInputStream);

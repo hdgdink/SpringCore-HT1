@@ -2,7 +2,6 @@ package kz.epam.spring.hometask1.service.impl;
 
 import kz.epam.spring.hometask1.dao.impl.UserDao;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.runner.App;
 import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.UserService;
 
@@ -10,7 +9,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 
 public class UserServiceImpl implements UserService, AbstractDomainService<User> {
-    private UserDao userDao ;
+    private UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;

@@ -56,6 +56,7 @@ public class MenuServiceImpl {
 
         if (isLogged)
             System.out.println("--d.Log out");
+
         System.out.println("--e.Exit");
 
         while (!isChosen) {
@@ -63,7 +64,7 @@ public class MenuServiceImpl {
         }
     }
 
-    public void showAdminMenu() {
+    private void showAdminMenu() {
         adminAction.showAdminMenu();
         isLogged = false;
         isAdmin = false;
@@ -71,7 +72,7 @@ public class MenuServiceImpl {
         showMainMenu();
     }
 
-    public void showLogInMenu() {
+    private void showLogInMenu() {
         String email;
         String pass;
 
@@ -98,19 +99,17 @@ public class MenuServiceImpl {
                 showLogInMenu();
                 loggedUser = null;
             }
-
         }
-
     }
 
-    public void moveBackLogInMenuCheck(String email) {
+    private void moveBackLogInMenuCheck(String email) {
         if (email.equals("q"))
             showMainMenu();
         else showLogInMenu();
     }
 
 
-    public void showSignInMenu() {
+    private void showSignInMenu() {
         String email;
         String firstName;
         String lastName;
@@ -151,7 +150,7 @@ public class MenuServiceImpl {
     }
 
 
-    public void showEventListMenu() {
+    private void showEventListMenu() {
         System.out.println("----------------Events----------------");
 
         if (!isLogged)
@@ -172,7 +171,7 @@ public class MenuServiceImpl {
         }
     }
 
-    public void buyTicketMenu() {
+    private void buyTicketMenu() {
         Long eventId;
         Event choosenEvent;
         System.out.println("----------------Buy ticket----------------");
@@ -189,8 +188,7 @@ public class MenuServiceImpl {
         }
     }
 
-
-    public void showVariantsMenu(Event event) {
+    private void showVariantsMenu(Event event) {
         LocalDateTime choosenDate;
         System.out.println("------Dates and location of the event-----");
         System.out.println("--Enter the number of the available option--");
@@ -208,7 +206,7 @@ public class MenuServiceImpl {
             System.out.println("Available " + eventAction.showAuditorium(choosenDate, event));
             System.out.println("Enter the number of seat");
             eventAction.showSeats((LocalDateTime) dates[number], event);
-            System.out.println("");
+            System.out.println();
             Long seatNumber = scanner.nextLong();
 
             if (eventAction.bookPlace(loggedUser, event, choosenDate, seatNumber)) {
@@ -227,8 +225,7 @@ public class MenuServiceImpl {
         }
     }
 
-
-    public void checkVariantsMenuInput(String next, Event event, LocalDateTime dateTime, Long seatNumber) {
+    private void checkVariantsMenuInput(String next, Event event, LocalDateTime dateTime, Long seatNumber) {
         switch (next) {
             case "a":
                 if (eventAction.buyTicket(event, dateTime, seatNumber, loggedUser)) showMainMenu();
@@ -243,8 +240,7 @@ public class MenuServiceImpl {
         }
     }
 
-
-    public void checkEventMenuInput(String next) {
+    private void checkEventMenuInput(String next) {
         switch (next) {
             case "a":
                 buyTicketMenu();
@@ -258,8 +254,7 @@ public class MenuServiceImpl {
         }
     }
 
-
-    public void checkMainMenuInput(String s) {
+    private void checkMainMenuInput(String s) {
         switch (s) {
             case "a":
                 showLogInMenu();

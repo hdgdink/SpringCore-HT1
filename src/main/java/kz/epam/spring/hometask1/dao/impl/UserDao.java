@@ -25,7 +25,6 @@ public class UserDao implements Dao<User> {
         return users.get(id);
     }
 
-
     @Override
     public Collection getAll() {
         return users.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());

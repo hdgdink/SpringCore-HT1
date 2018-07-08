@@ -30,7 +30,6 @@ public class EventDao implements Dao<Event> {
         return events.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
     }
 
-
     public Event getEventByName(String name) {
         Event event = null;
         List<Event> eventList = new ArrayList<>(events.values());
