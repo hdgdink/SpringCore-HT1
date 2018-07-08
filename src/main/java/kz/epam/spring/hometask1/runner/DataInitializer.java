@@ -4,6 +4,9 @@ import kz.epam.spring.hometask1.domain.*;
 import kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,10 +16,16 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-class DataInitializer {
+@Component
+@ComponentScan
+public class DataInitializer {
+    @Autowired
     private UserServiceImpl userService;
+    @Autowired
     private EventServiceImpl eventService;
+    @Autowired
     private AuditoriumServiceImpl auditoriumService;
+
     private final static String PATH_TO_PROPERTIES = "src/main/resources/auditoriums.properties";
 
     public DataInitializer(UserServiceImpl userService, EventServiceImpl eventService, AuditoriumServiceImpl auditoriumService) {

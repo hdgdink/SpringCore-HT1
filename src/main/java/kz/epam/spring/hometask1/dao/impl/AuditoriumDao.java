@@ -2,10 +2,18 @@ package kz.epam.spring.hometask1.dao.impl;
 
 import kz.epam.spring.hometask1.dao.Dao;
 import kz.epam.spring.hometask1.domain.Auditorium;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Repository
+@Qualifier("auditoriumDao")
+@ComponentScan("kz.epam.spring.hometask1")
+@Component
 public class AuditoriumDao implements Dao<Auditorium> {
     private static Map<Long, Auditorium> auditoriums = new HashMap<>();
 

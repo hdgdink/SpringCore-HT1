@@ -6,6 +6,9 @@ import kz.epam.spring.hometask1.domain.Ticket;
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.impl.BookingServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,8 +16,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
+@Component
+@ComponentScan
 public class EventAction {
+    @Autowired
     private EventServiceImpl eventService;
+    @Autowired
     private BookingServiceImpl bookingService;
 
     public EventAction() {

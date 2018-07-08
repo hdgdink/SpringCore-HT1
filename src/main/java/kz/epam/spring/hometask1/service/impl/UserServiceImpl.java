@@ -4,11 +4,17 @@ import kz.epam.spring.hometask1.dao.impl.UserDao;
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
+@Service
+@ComponentScan
 public class UserServiceImpl implements UserService, AbstractDomainService<User> {
+    @Autowired
     private UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {

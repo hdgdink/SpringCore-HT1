@@ -6,6 +6,9 @@ import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.EventRating;
 import kz.epam.spring.hometask1.domain.Ticket;
 import kz.epam.spring.hometask1.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,9 +18,14 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Service
+@ComponentScan
 public class BookingServiceImpl implements kz.epam.spring.hometask1.service.BookingService {
+    @Autowired
     private TicketDao ticketDao;
+    @Autowired
     private UserDao userDao;
+    @Autowired
     private DiscountServiceImpl discountService;
 
     public BookingServiceImpl(TicketDao ticketDao, UserDao userDao, DiscountServiceImpl discountService) {

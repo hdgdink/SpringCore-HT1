@@ -3,8 +3,14 @@ package kz.epam.spring.hometask1.action.user;
 import kz.epam.spring.hometask1.domain.Role;
 import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
+@Component
+@ComponentScan
 public class LogInAction {
+    @Autowired
     private UserServiceImpl userService;
 
     public LogInAction() {

@@ -6,6 +6,9 @@ import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,8 +16,12 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+@Service
+@ComponentScan
 public class EventServiceImpl implements EventService, AbstractDomainService<Event> {
+    @Autowired
     private EventDao eventDao;
+    @Autowired
     private TicketDao ticketDao;
 
     public EventServiceImpl(EventDao eventDao, TicketDao ticketDao) {

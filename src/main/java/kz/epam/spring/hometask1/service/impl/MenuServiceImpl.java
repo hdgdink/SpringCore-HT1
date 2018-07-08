@@ -6,16 +6,25 @@ import kz.epam.spring.hometask1.action.user.SignAction;
 import kz.epam.spring.hometask1.action.user.admin.AdminAction;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+@Service
+@ComponentScan
 public class MenuServiceImpl {
     private Scanner scanner = new Scanner(System.in);
 
+    @Autowired
     private SignAction signAction;
+    @Autowired
     private LogInAction logInAction;
+    @Autowired
     private EventAction eventAction;
+    @Autowired
     private AdminAction adminAction;
 
     private static User loggedUser;

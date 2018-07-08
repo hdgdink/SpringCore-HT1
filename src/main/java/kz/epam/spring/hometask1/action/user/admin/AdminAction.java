@@ -7,6 +7,9 @@ import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -15,11 +18,15 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by HdgDink} on 07.07.2018.
  */
+@Component
+@ComponentScan
 public class AdminAction {
     private Scanner scanner = new Scanner(System.in);
-
+    @Autowired
     private UserServiceImpl userService;
+    @Autowired
     private EventServiceImpl eventService;
+    @Autowired
     private AuditoriumServiceImpl auditoriumService;
 
     private Boolean isEmpty = false;

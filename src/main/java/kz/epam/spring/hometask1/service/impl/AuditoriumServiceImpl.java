@@ -4,12 +4,18 @@ import kz.epam.spring.hometask1.dao.impl.AuditoriumDao;
 import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.service.AbstractDomainService;
 import kz.epam.spring.hometask1.service.AuditoriumService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
+@Service
+@ComponentScan
 public class AuditoriumServiceImpl implements AuditoriumService, AbstractDomainService<Auditorium> {
+    @Autowired
     private AuditoriumDao auditoriumDao;
 
     public AuditoriumServiceImpl() {
