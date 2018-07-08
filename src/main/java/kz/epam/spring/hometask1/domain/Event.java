@@ -180,6 +180,6 @@ public class Event extends DomainObject {
 
     @Override
     public String toString() {
-        return "Event #" + getId() + " " + name + ", basePrice=" + basePrice + ", rating=" + rating;
+        return "Event №" + getId() + " " + name + ", basePrice=" + basePrice + ", rating=" + rating;
     }
 }

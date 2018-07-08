@@ -3,9 +3,9 @@ package kz.epam.spring.hometask1.service.impl;
 import kz.epam.spring.hometask1.action.event.EventAction;
 import kz.epam.spring.hometask1.action.user.LogInAction;
 import kz.epam.spring.hometask1.action.user.SignAction;
+import kz.epam.spring.hometask1.action.user.admin.AdminAction;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.User;
-import kz.epam.spring.hometask1.runner.App;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -14,26 +14,34 @@ public class MenuServiceImpl {
     private Scanner scanner = new Scanner(System.in);
 
     private SignAction signAction;
-    private LogInAction logInAction ;
+    private LogInAction logInAction;
     private EventAction eventAction;
+    private AdminAction adminAction;
 
     private static User loggedUser;
-    private boolean isChoosen;
+    private boolean isChosen;
     private boolean isLogged;
+    private boolean isAdmin;
 
     public MenuServiceImpl() {
     }
 
-    public MenuServiceImpl(SignAction signAction, LogInAction logInAction, EventAction eventAction) {
+    public MenuServiceImpl(SignAction signAction, LogInAction logInAction,
+                           EventAction eventAction, AdminAction adminAction) {
         this.signAction = signAction;
         this.logInAction = logInAction;
         this.eventAction = eventAction;
+        this.adminAction = adminAction;
     }
 
     public void showMainMenu() {
         if (!isLogged)
             System.out.println("-------------Welcome to Cinema----------------");
         else System.out.println("Welcome " + loggedUser.getFirstName());
+
+        if (isAdmin) {
+            showAdminMenu();
+        }
 
         System.out.println("----------------------------------------------");
         System.out.println("------------------Main Menu-------------------");
@@ -45,15 +53,23 @@ public class MenuServiceImpl {
         }
 
         System.out.println("--c.Show list of event");
+
         if (isLogged)
             System.out.println("--d.Log out");
         System.out.println("--e.Exit");
 
-        while (!isChoosen) {
+        while (!isChosen) {
             checkMainMenuInput(scanner.next());
         }
     }
 
+    public void showAdminMenu() {
+        adminAction.showAdminMenu();
+        isLogged = false;
+        isAdmin = false;
+        loggedUser = null;
+        showMainMenu();
+    }
 
     public void showLogInMenu() {
         String email;
@@ -76,6 +92,7 @@ public class MenuServiceImpl {
 
             if (loggedUser.getEmail() != null) {
                 isLogged = true;
+                isAdmin = logInAction.checkIsAdmin(loggedUser);
                 showMainMenu();
             } else {
                 showLogInMenu();
@@ -85,7 +102,6 @@ public class MenuServiceImpl {
         }
 
     }
-
 
     public void moveBackLogInMenuCheck(String email) {
         if (email.equals("q"))
@@ -151,7 +167,7 @@ public class MenuServiceImpl {
 
         System.out.println("--b.Back to main menu");
 
-        while (!isChoosen) {
+        while (!isChosen) {
             checkEventMenuInput(scanner.next());
         }
     }
@@ -161,7 +177,6 @@ public class MenuServiceImpl {
         Event choosenEvent;
         System.out.println("----------------Buy ticket----------------");
         System.out.println("-----------Enter number of event----------");
-
 
         eventId = scanner.nextLong();
         choosenEvent = eventAction.getEventById(eventId);
@@ -184,7 +199,6 @@ public class MenuServiceImpl {
         for (int i = 0; i < dates.length; i++) {
             System.out.println(i + " " + dates[i]);
         }
-
 
         System.out.println("Enter the position of the interesting date");
         int number = scanner.nextInt();
@@ -257,7 +271,7 @@ public class MenuServiceImpl {
                 showEventListMenu();
                 break;
             case "e":
-                isChoosen = true;
+                isChosen = true;
                 System.exit(0);
                 break;
             case "d":

@@ -11,6 +11,7 @@ import kz.epam.spring.hometask1.runner.App;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -65,7 +66,13 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
     @Nonnull
     @Override
     public Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull LocalDateTime dateTime) {
-        return null;
+        Set<Ticket> tickets = new HashSet<>();
+        for(Ticket ticket : ticketDao.getAll()){
+            if(ticket.getEvent().equals(event) && ticket.getDateTime().equals(dateTime)){
+                tickets.add(ticket);
+            }
+        }
+        return tickets;
     }
 
 

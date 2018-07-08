@@ -4,7 +4,7 @@ import kz.epam.spring.hometask1.domain.Auditorium;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Set;
+import java.util.Collection;
 
 public interface AuditoriumService {
     /**
@@ -13,7 +13,7 @@ public interface AuditoriumService {
      * @return set of all auditoriums
      */
     public @Nonnull
-    Set<Auditorium> getAll();
+    Collection<Auditorium> getAll();
 
     /**
      * Finding auditorium by name

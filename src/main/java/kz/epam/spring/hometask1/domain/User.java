@@ -92,22 +92,12 @@ public class User extends DomainObject {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(firstName, lastName, email, role, pass, balance, tickets);
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "Id = '" + getId() + '\'' +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", pass='" + pass + '\'' +
-                ", tickets=" + tickets +
-                '}';
+        return "User № " + getId() + " firstName = '" + firstName + "', lastName='" + lastName + "', email='" + email +
+                ", role=" + role + ", pass='" + pass + "', tickets=" + tickets;
     }
-
-
 }

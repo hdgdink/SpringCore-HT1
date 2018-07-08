@@ -56,7 +56,6 @@ public class EventAction {
         System.out.println("Vip seats");
         System.out.println(vipSeats);
         System.out.println("All seats");
-        System.out.println("All tickets, ");
         showSeatsMatrix(auditorium, event, date);
     }
 

@@ -57,7 +57,6 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
     }
 
     public Boolean checkBookedPlace(Auditorium auditorium, Event event, LocalDateTime dateTime, Long seatNumber) {
-        System.out.println(ticketDao.getAll());
         return getUsedSeats(auditorium, event).contains(seatNumber) &&
                 event.getAuditoriums().get(dateTime).equals(auditorium);
     }

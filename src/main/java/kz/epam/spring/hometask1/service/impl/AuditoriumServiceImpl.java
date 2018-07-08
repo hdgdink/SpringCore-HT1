@@ -7,7 +7,7 @@ import kz.epam.spring.hometask1.service.AuditoriumService;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Set;
+import java.util.Collection;
 
 public class AuditoriumServiceImpl implements AuditoriumService, AbstractDomainService<Auditorium> {
     private AuditoriumDao auditoriumDao;
@@ -37,8 +37,8 @@ public class AuditoriumServiceImpl implements AuditoriumService, AbstractDomainS
 
     @Nonnull
     @Override
-    public Set<Auditorium> getAll() {
-        return (Set<Auditorium>) auditoriumDao.getAll();
+    public Collection<Auditorium> getAll() {
+        return auditoriumDao.getAll();
     }
 
     @Nullable

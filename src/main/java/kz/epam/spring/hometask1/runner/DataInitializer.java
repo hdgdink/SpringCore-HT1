@@ -1,9 +1,6 @@
 package kz.epam.spring.hometask1.runner;
 
-import kz.epam.spring.hometask1.domain.Auditorium;
-import kz.epam.spring.hometask1.domain.Event;
-import kz.epam.spring.hometask1.domain.EventRating;
-import kz.epam.spring.hometask1.domain.User;
+import kz.epam.spring.hometask1.domain.*;
 import kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 import kz.epam.spring.hometask1.service.impl.UserServiceImpl;
@@ -32,22 +29,23 @@ class DataInitializer {
     }
 
     void initData() {
-        initUser("Vovka", "Pupkin", "asd@asd.asd", "123");
-        initUser("Andrey", "Vass", "hdg", "456");
-        initUser("a", "a", "a", "a");
+        initUser("Vovka", "Pupkin", "asd@asd.asd", "123", 12000.0, Role.CLIENT);
+        initUser("Andrey", "Vass", "hdg", "456", 0.0, Role.ADMIN);
+        initUser("a", "a", "a", "a", 12000.0, Role.CLIENT);
         initAuditoriums(1);
         initAuditoriums(2);
         initEvent("Abay's way", 400.0, EventRating.HIGH);
         initEvent("T-34", 300.0, EventRating.MID);
     }
 
-    private void initUser(String firstName, String lastName, String email, String pass) {
+    private void initUser(String firstName, String lastName, String email, String pass, Double balance, Role role) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPass(pass);
-        user.setBalance(12000.0);
+        user.setBalance(balance);
+        user.setRole(role);
         userService.save(user);
     }
 
