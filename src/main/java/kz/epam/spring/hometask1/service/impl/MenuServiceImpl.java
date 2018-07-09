@@ -17,7 +17,6 @@ import java.util.Scanner;
 @ComponentScan
 public class MenuServiceImpl {
     private Scanner scanner = new Scanner(System.in);
-
     @Autowired
     private SignAction signAction;
     @Autowired
@@ -27,7 +26,7 @@ public class MenuServiceImpl {
     @Autowired
     private AdminAction adminAction;
 
-    private static User loggedUser;
+    public static User loggedUser;
     private boolean isChosen;
     private boolean isLogged;
     private boolean isAdmin;
