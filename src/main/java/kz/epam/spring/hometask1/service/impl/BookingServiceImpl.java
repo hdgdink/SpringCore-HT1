@@ -2,10 +2,7 @@ package kz.epam.spring.hometask1.service.impl;
 
 import kz.epam.spring.hometask1.dao.impl.TicketDao;
 import kz.epam.spring.hometask1.dao.impl.UserDao;
-import kz.epam.spring.hometask1.domain.Event;
-import kz.epam.spring.hometask1.domain.EventRating;
-import kz.epam.spring.hometask1.domain.Ticket;
-import kz.epam.spring.hometask1.domain.User;
+import kz.epam.spring.hometask1.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
@@ -14,9 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.NavigableSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 @ComponentScan
@@ -27,10 +22,14 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
     private UserDao userDao;
     @Autowired
     private DiscountServiceImpl discountService;
+    @Autowired
+    private AuditoriumServiceImpl auditoriumService;
 
-    public BookingServiceImpl(TicketDao ticketDao, UserDao userDao, DiscountServiceImpl discountService) {
+    public BookingServiceImpl(TicketDao ticketDao, UserDao userDao, DiscountServiceImpl discountService,
+                              AuditoriumServiceImpl auditoriumService) {
         this.ticketDao = ticketDao;
         this.userDao = userDao;
+        this.auditoriumService = auditoriumService;
         this.discountService = discountService;
     }
 
@@ -41,8 +40,9 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
     public double getTicketPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user, @Nonnull Long seat) {
         double price;
         price = event.getBasePrice();
+        Auditorium auditorium = auditoriumService.getById(event.getAuditoriumId());
 
-        if (event.getAuditoriums().get(dateTime).getVipSeats().contains(seat))
+        if (auditorium.getVipSeats().contains(seat))
             price *= 2;
 
         if (event.getRating().equals(EventRating.HIGH))
@@ -66,10 +66,10 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
         }
 
         if (user.getBalance() >= finalPrice) {
-           // NavigableSet<Ticket> tickets = new TreeSet<>();
-          //  tickets.add(ticket);
+            // NavigableSet<Ticket> tickets = new TreeSet<>();
+            //  tickets.add(ticket);
             user.setBalance(user.getBalance() - finalPrice);
-           // user.setTickets(tickets);
+            // user.setTickets(tickets);
             ticketDao.addObject(ticket);
             userDao.setBalance(user.getId(), user.getBalance());
             System.out.println("You buy the ticket, you balance now is: " + user.getBalance());

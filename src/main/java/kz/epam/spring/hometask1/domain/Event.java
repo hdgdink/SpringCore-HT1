@@ -32,14 +32,14 @@ public class Event extends DomainObject {
      * @return <code>true</code> if successful, <code>false</code> if event is
      * not aired on that date
      */
-    public boolean assignAuditorium(LocalDateTime dateTime, Auditorium auditorium) {
-        if (airDates.contains(dateTime)) {
-            auditoriums.put(dateTime, auditorium);
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean assignAuditorium(LocalDateTime dateTime, Auditorium auditorium) {
+//        if (airDates.contains(dateTime)) {
+//            auditoriums.put(dateTime, auditorium);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     /**
      * Removes auditorium assignment from event

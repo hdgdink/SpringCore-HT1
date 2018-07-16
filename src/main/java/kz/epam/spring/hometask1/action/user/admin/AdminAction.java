@@ -257,7 +257,6 @@ public class AdminAction {
         Boolean isFinished = false;
 
         System.out.println("-----------Add new event---------");
-
         System.out.println("-----------Enter the name--------");
         name = scanner.next();
 

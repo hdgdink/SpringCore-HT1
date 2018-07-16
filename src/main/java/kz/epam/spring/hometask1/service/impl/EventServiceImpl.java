@@ -64,6 +64,10 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
         return eventDao.getAll();
     }
 
+    public List<LocalDateTime> getAirDates(String eventName){
+        return eventDao.getAirDates(eventName);
+    }
+
     private List getUsedSeats(Auditorium auditorium, Event event, LocalDateTime dateTime) {
         return ticketDao.getUsedSeatsInAuditorium(auditorium.getId(), event.getId(), dateTime);
     }

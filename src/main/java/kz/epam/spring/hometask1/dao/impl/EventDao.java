@@ -18,7 +18,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 @Qualifier("eventDao")
@@ -26,13 +30,14 @@ import java.util.Collection;
 @Component
 public class EventDao implements Dao<Event> {
     private static final String ADD_EVENT = "INSERT INTO Events (id,name, basePrice, rating, date, auditoriumId) " +
-            "VALUES (?, ?, ?, ?, ?)";
+            "VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_EVENT = "update Events set name = ?, basePrice=?, rating=?, date=?, " +
             "auditoriumId=?  where id = ?";
     private static final String REMOVE_EVENT_BY_ID = "remove * from Events where id = ?";
     private static final String GET_EVENT_BY_ID = "select * from Events where id = ?";
     private static final String GET_ALL_EVENTS = "select * from Events";
     private static final String GET_EVENT_BY_NAME = "SELECT * from Events where name = ?";
+    private static final String GET_DATES_FOR_EVENT_BY_NAME = "SELECT date from Events WHERE name = ?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -83,6 +88,19 @@ public class EventDao implements Dao<Event> {
     public Collection<Event> getAll() {
         return jdbcTemplate.query(GET_ALL_EVENTS, rowMapper);
     }
+
+    public List<LocalDateTime> getAirDates(String name){
+        List<LocalDateTime> dates = new ArrayList<>();
+        List<Timestamp> timestamps = jdbcTemplate.queryForList(GET_DATES_FOR_EVENT_BY_NAME,
+                new Object[]{name}, Timestamp.class);
+
+        for(Timestamp timestamp : timestamps){
+            dates.add(LocalDateTime.ofInstant(timestamp.toInstant(), ZoneOffset.ofHours(6)));
+        }
+        return dates;
+    }
+
+
 
     public Event getEventByName(String name) {
         Event event = jdbcTemplate.queryForObject(GET_EVENT_BY_NAME,

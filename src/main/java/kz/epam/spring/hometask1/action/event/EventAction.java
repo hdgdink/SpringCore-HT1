@@ -4,6 +4,7 @@ import kz.epam.spring.hometask1.domain.Auditorium;
 import kz.epam.spring.hometask1.domain.Event;
 import kz.epam.spring.hometask1.domain.Ticket;
 import kz.epam.spring.hometask1.domain.User;
+import kz.epam.spring.hometask1.service.impl.AuditoriumServiceImpl;
 import kz.epam.spring.hometask1.service.impl.BookingServiceImpl;
 import kz.epam.spring.hometask1.service.impl.EventServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
 
 @Component
 @ComponentScan
@@ -23,12 +23,15 @@ public class EventAction {
     private EventServiceImpl eventService;
     @Autowired
     private BookingServiceImpl bookingService;
+    @Autowired
+    private AuditoriumServiceImpl auditoriumService;
 
     public EventAction() {
     }
 
-    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService) {
+    public EventAction(EventServiceImpl eventService, BookingServiceImpl bookingService, AuditoriumServiceImpl auditoriumService) {
         this.eventService = eventService;
+        this.auditoriumService = auditoriumService;
         this.bookingService = bookingService;
     }
 
@@ -41,22 +44,21 @@ public class EventAction {
     }
 
     public Boolean buyTicket(Event event, LocalDateTime dateTime, Long seatNumber, User user) {
-        Ticket ticket = new Ticket(user.getId(), event.getId(), dateTime, seatNumber, event.getAuditoriums().get(dateTime).getId());
+        Ticket ticket = new Ticket(user.getId(), event.getId(), dateTime, seatNumber, event.getAuditoriumId());
         Double finalPrice = bookingService.getTicketPrice(event, dateTime, user, seatNumber);
         return bookingService.buyTicket(ticket, user, finalPrice);
     }
 
-    public TreeSet showDates(Event event) {
-        return new TreeSet(event.getAirDates());
-
+    public List<LocalDateTime> showDates(Event event) {
+        return eventService.getAirDates(event.getName());
     }
 
-    public Auditorium showAuditorium(LocalDateTime date, Event event) {
-        return event.getAuditoriums().get(date);
+    public Auditorium showAuditorium(Event event) {
+        return auditoriumService.getById(event.getAuditoriumId());
     }
 
     public void showSeats(LocalDateTime date, Event event) {
-        Auditorium auditorium = event.getAuditoriums().get(date);
+        Auditorium auditorium = auditoriumService.getById(event.getAuditoriumId());
         List<Long> vipSeats = new ArrayList<>(auditorium.getVipSeats());
 
         System.out.println("Vip seats");
@@ -94,7 +96,7 @@ public class EventAction {
     }
 
     public Boolean bookPlace(User loggedUser, Event event, LocalDateTime dateTime, Long seatNumber) {
-        Auditorium auditorium = showAuditorium(dateTime, event);
+        Auditorium auditorium = showAuditorium(event);
 
         if (eventService.checkBookedPlace(auditorium, event, dateTime, seatNumber)) {
             System.out.println("Seat is busy");

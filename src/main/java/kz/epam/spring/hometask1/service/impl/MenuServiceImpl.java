@@ -211,7 +211,7 @@ public class MenuServiceImpl {
 
         if (number < dates.length) {
             choosenDate = (LocalDateTime) dates[number];
-            System.out.println("Available " + eventAction.showAuditorium(choosenDate, event));
+            System.out.println("Available " + eventAction.showAuditorium(event));
             System.out.println("Enter the number of seat");
             eventAction.showSeats((LocalDateTime) dates[number], event);
             System.out.println();
