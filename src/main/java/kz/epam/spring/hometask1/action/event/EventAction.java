@@ -41,7 +41,7 @@ public class EventAction {
     }
 
     public Boolean buyTicket(Event event, LocalDateTime dateTime, Long seatNumber, User user) {
-        Ticket ticket = new Ticket(user, event, dateTime, seatNumber);
+        Ticket ticket = new Ticket(user.getId(), event.getId(), dateTime, seatNumber, event.getAuditoriums().get(dateTime).getId());
         Double finalPrice = bookingService.getTicketPrice(event, dateTime, user, seatNumber);
         return bookingService.buyTicket(ticket, user, finalPrice);
     }

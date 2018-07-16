@@ -5,6 +5,8 @@ import java.util.Collection;
 public interface Dao<T> {
     T addObject(T t);
 
+    void updateObject(T t);
+
     void removeObject(T t);
 
     T getById(Long id);

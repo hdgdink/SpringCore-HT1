@@ -32,6 +32,11 @@ public class AuditoriumServiceImpl implements AuditoriumService, AbstractDomainS
     }
 
     @Override
+    public void update(@Nonnull Auditorium object) {
+
+    }
+
+    @Override
     public void remove(@Nonnull Auditorium object) {
         auditoriumDao.removeObject(object);
     }

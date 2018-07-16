@@ -90,12 +90,14 @@ public class AdminAction {
         user.setPass(pass);
         user.setBalance(balance);
 
-        if (userService.save(user) != null) {
-            System.out.println("New user with name: " + user.getFirstName() + " and email: " + user.getEmail()
-                    + " is added");
-        } else {
-            System.out.println("Error of creating the user");
-        }
+        if (user.getId() == null) {
+            if (userService.save(user) != null) {
+                System.out.println("New user with name: " + user.getFirstName() + " and email: " + user.getEmail()
+                        + " is added");
+            } else {
+                System.out.println("Error of creating the user");
+            }
+        } else userService.update(user);
     }
 
     private boolean checkEmail(String email) {
@@ -138,27 +140,33 @@ public class AdminAction {
         System.out.println("-------Enter the number of user for editing------");
         userId = scanner.nextLong();
         user = userService.getById(userId);
-        email = user.getEmail();
-        System.out.println("You selected a user: " + user);
 
-        System.out.println("Current user's first name is: " + user.getFirstName());
-        System.out.println("Enter a new name or enter the current name again");
-        firstName = scanner.next();
+        if (user != null) {
+            email = user.getEmail();
+            System.out.println("You selected a user: " + user);
 
-        System.out.println("Current user's last first name is: " + user.getLastName());
-        System.out.println("Enter a new last name or enter the current last name again");
-        lastName = scanner.next();
+            System.out.println("Current user's first name is: " + user.getFirstName());
+            System.out.println("Enter a new name or enter the current name again");
+            firstName = scanner.next();
 
-        System.out.println("Current user's pass is: " + user.getPass());
-        System.out.println("Enter a new password or enter the current password again");
-        pass = scanner.next();
+            System.out.println("Current user's last first name is: " + user.getLastName());
+            System.out.println("Enter a new last name or enter the current last name again");
+            lastName = scanner.next();
 
-        System.out.println("Current user's balance is: " + user.getBalance());
-        System.out.println("Enter a new balance or enter the current balance again");
-        balance = scanner.nextDouble();
+            System.out.println("Current user's pass is: " + user.getPass());
+            System.out.println("Enter a new password or enter the current password again");
+            pass = scanner.next();
 
-        createNewUser(user, firstName, lastName, email, pass, balance);
-        showAllUsers();
+            System.out.println("Current user's balance is: " + user.getBalance());
+            System.out.println("Enter a new balance or enter the current balance again");
+            balance = scanner.nextDouble();
+
+            createNewUser(user, firstName, lastName, email, pass, balance);
+            showAllUsers();
+        } else {
+            System.out.println("Incorrect id, try again");
+            showEditUserMenu();
+        }
     }
 
     private void showAllEvents() {

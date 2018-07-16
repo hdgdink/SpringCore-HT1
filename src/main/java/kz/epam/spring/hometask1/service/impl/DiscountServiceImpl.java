@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @ComponentScan
 public class DiscountServiceImpl implements DiscountService {
     @Override
-    public byte getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long ticketNumber) {
+    public byte getDiscount(@Nullable Long userId, @Nonnull Long eventId, @Nonnull LocalDateTime airDateTime, long ticketNumber) {
         int luckyNumber = 25;
 
         if (ticketNumber % 5 == 0) {

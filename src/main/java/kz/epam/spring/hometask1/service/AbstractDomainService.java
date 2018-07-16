@@ -7,12 +7,18 @@ import java.util.Collection;
 
 public interface AbstractDomainService<T extends DomainObject> {
     /**
-     * Saving new object to storage or updating existing one
+     * Saving new object to storage
      *
      * @param object Object to save
      * @return saved object with assigned id
      */
     public T save(@Nonnull T object);
+    /**
+     * Updating object to storage
+     *
+     * @param object Object to update
+     */
+    public void update(@Nonnull T object);
 
     /**
      * Removing object from storage

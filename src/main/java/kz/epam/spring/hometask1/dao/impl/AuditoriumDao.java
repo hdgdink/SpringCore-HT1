@@ -26,6 +26,11 @@ public class AuditoriumDao implements Dao<Auditorium> {
     }
 
     @Override
+    public void updateObject(Auditorium auditorium) {
+
+    }
+
+    @Override
     public void removeObject(Auditorium auditorium) {
         auditoriums.remove(auditorium.getId());
     }

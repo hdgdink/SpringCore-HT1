@@ -3,33 +3,38 @@ package kz.epam.spring.hometask1.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Ticket extends DomainObject implements Comparable<Ticket> {
-    private User user;
-    private Event event;
+public class Ticket extends DomainObject {
+    private Long userId;
+    private Long eventId;
     private LocalDateTime dateTime;
     private long seat;
+    private Long auditoriumId;
 
-    public Ticket(User user, Event event, LocalDateTime dateTime, long seat) {
-        this.user = user;
-        this.event = event;
+    public Ticket(Long userId, Long eventId, LocalDateTime dateTime, long seat, Long auditoriumId) {
+        this.userId = userId;
+        this.eventId = eventId;
         this.dateTime = dateTime;
         this.seat = seat;
+        this.auditoriumId = auditoriumId;
     }
 
-    public User getUser() {
-        return user;
+    public Ticket() {
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Event getEvent() {
-        return event;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public LocalDateTime getDateTime() {
@@ -48,38 +53,30 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         this.seat = seat;
     }
 
+    public Long getAuditoriumId() {
+        return auditoriumId;
+    }
+
+    public void setAuditoriumId(Long auditoriumId) {
+        this.auditoriumId = auditoriumId;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
         return seat == ticket.seat &&
-                Objects.equals(user, ticket.user) &&
-                Objects.equals(event, ticket.event) &&
-                Objects.equals(dateTime, ticket.dateTime);
+                Objects.equals(userId, ticket.userId) &&
+                Objects.equals(eventId, ticket.eventId) &&
+                Objects.equals(dateTime, ticket.dateTime) &&
+                Objects.equals(auditoriumId, ticket.auditoriumId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, event, dateTime, seat);
-    }
 
-    @Override
-    public int compareTo(Ticket o) {
-        if (o == null) {
-            return 1;
-        }
-
-        int result = dateTime.compareTo(o.getDateTime());
-
-        if (result == 0) {
-            result = event.getName().compareTo(o.getEvent().getName());
-        }
-
-        if (result == 0) {
-            result = Long.compare(seat, o.getSeat());
-        }
-        return result;
+        return Objects.hash(userId, eventId, dateTime, seat, auditoriumId);
     }
 }

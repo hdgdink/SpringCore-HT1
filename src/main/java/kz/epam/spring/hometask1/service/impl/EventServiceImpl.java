@@ -44,6 +44,11 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
     }
 
     @Override
+    public void update(@Nonnull Event object) {
+
+    }
+
+    @Override
     public void remove(@Nonnull Event object) {
         eventDao.removeObject(object);
     }
@@ -59,12 +64,12 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
         return eventDao.getAll();
     }
 
-    private List getUsedSeats(Auditorium auditorium, Event event) {
-        return ticketDao.getUsedSeatsInAuditorium(auditorium.getName(), event);
+    private List getUsedSeats(Auditorium auditorium, Event event, LocalDateTime dateTime) {
+        return ticketDao.getUsedSeatsInAuditorium(auditorium.getId(), event.getId(), dateTime);
     }
 
     public Boolean checkBookedPlace(Auditorium auditorium, Event event, LocalDateTime dateTime, Long seatNumber) {
-        return getUsedSeats(auditorium, event).contains(seatNumber) &&
+        return getUsedSeats(auditorium, event, dateTime).contains(seatNumber) &&
                 event.getAuditoriums().get(dateTime).equals(auditorium);
     }
 }

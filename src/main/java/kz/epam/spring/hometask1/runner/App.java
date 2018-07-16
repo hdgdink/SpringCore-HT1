@@ -9,16 +9,17 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("kz.epam.spring.hometask1")
 public class App {
     private static ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-    private static DataInitializer dataInitializer;
     private static MenuServiceImpl menuService;
+//    private static DataInitializer dataInitializer;
 
-    public App(DataInitializer dataInitializer, MenuServiceImpl menuService) {
-        App.dataInitializer = dataInitializer;
+    public App(/* DataInitializer dataInitializer,*/ MenuServiceImpl menuService) {
         App.menuService = menuService;
+      //  App.dataInitializer=dataInitializer;
     }
 
+
     public static void main(String[] args) {
-        dataInitializer.initData();
+//        dataInitializer.initData();
         menuService.showMainMenu();
     }
 }

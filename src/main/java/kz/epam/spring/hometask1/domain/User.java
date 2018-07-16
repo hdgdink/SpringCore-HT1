@@ -1,8 +1,6 @@
 package kz.epam.spring.hometask1.domain;
 
-import java.util.NavigableSet;
 import java.util.Objects;
-import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class User extends DomainObject {
@@ -12,7 +10,7 @@ public class User extends DomainObject {
     private Role role;
     private String pass;
     private Double balance;
-    private NavigableSet<Ticket> tickets = new TreeSet<>();
+
 
     public String getPass() {
         return pass;
@@ -60,14 +58,6 @@ public class User extends DomainObject {
         this.email = email;
     }
 
-    public NavigableSet<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(NavigableSet<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
     public Double getBalance() {
         return balance;
     }
@@ -86,18 +76,17 @@ public class User extends DomainObject {
                 Objects.equals(email, user.email) &&
                 role == user.role &&
                 Objects.equals(pass, user.pass) &&
-                Objects.equals(balance, user.balance) &&
-                Objects.equals(tickets, user.tickets);
+                Objects.equals(balance, user.balance);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, email, role, pass, balance, tickets);
+        return Objects.hash(firstName, lastName, email, role, pass, balance);
     }
 
     @Override
     public String toString() {
         return "User № " + getId() + " firstName = '" + firstName + "', lastName='" + lastName + "', email='" + email +
-                ", role=" + role + ", pass='" + pass + "', tickets=" + tickets;
+                ", role=" + role + ", pass='" + pass + "'";
     }
 }

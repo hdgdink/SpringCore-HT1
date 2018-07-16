@@ -35,6 +35,12 @@ public class UserServiceImpl implements UserService, AbstractDomainService<User>
     }
 
     @Override
+    public void update(@Nonnull User object) {
+        userDao.updateObject(object);
+    }
+
+
+    @Override
     public void remove(@Nonnull User object) {
         userDao.removeObject(object);
     }
