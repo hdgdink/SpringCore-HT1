@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 @ComponentScan("kz.epam.spring.hometask1")
 @Component
 public class TicketDao implements Dao<Ticket> {
-    private static final String ADD_TICKET = "INSERT INTO Tickets (id,user_id, event_id, auditorium_id, " +
-            " date, seat) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String ADD_TICKET = "INSERT INTO Tickets (userId, eventId, auditoriumId, " +
+            " date, seat) VALUES ( ?, ?, ?, ?, ?)";
     private static final String UPDATE_TICKET = "update Tickets set userId = ?, eventId=?, auditoriumId=?, date=?," +
             "seat=? where id = ?";
     private static final String REMOVE_TICKET_BY_ID = "remove * from Tickets where id = ?";
@@ -51,12 +51,11 @@ public class TicketDao implements Dao<Ticket> {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_TICKET,
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(1, ticket.getId());
-            ps.setLong(2, ticket.getUserId());
-            ps.setLong(3, ticket.getEventId());
-            ps.setLong(4, ticket.getAuditoriumId());
-            ps.setTimestamp(5, Timestamp.valueOf(ticket.getDateTime()));
-            ps.setLong(6, ticket.getSeat());
+            ps.setLong(1, ticket.getUserId());
+            ps.setLong(2, ticket.getEventId());
+            ps.setLong(3, ticket.getAuditoriumId());
+            ps.setTimestamp(4, Timestamp.valueOf(ticket.getDateTime()));
+            ps.setLong(5, ticket.getSeat());
             return ps;
         }, holder);
         ticket.setId(holder.getKey().longValue());

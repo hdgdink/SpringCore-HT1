@@ -37,7 +37,8 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
     }
 
     @Override
-    public double getTicketPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user, @Nonnull Long seat) {
+    public double getTicketPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user,
+                                 @Nonnull Long seat) {
         double price;
         price = event.getBasePrice();
         Auditorium auditorium = auditoriumService.getById(event.getAuditoriumId());
@@ -66,10 +67,7 @@ public class BookingServiceImpl implements kz.epam.spring.hometask1.service.Book
         }
 
         if (user.getBalance() >= finalPrice) {
-            // NavigableSet<Ticket> tickets = new TreeSet<>();
-            //  tickets.add(ticket);
             user.setBalance(user.getBalance() - finalPrice);
-            // user.setTickets(tickets);
             ticketDao.addObject(ticket);
             userDao.setBalance(user.getId(), user.getBalance());
             System.out.println("You buy the ticket, you balance now is: " + user.getBalance());

@@ -60,7 +60,6 @@ public class EventAction {
     public void showSeats(LocalDateTime date, Event event) {
         Auditorium auditorium = auditoriumService.getById(event.getAuditoriumId());
         List<Long> vipSeats = new ArrayList<>(auditorium.getVipSeats());
-
         System.out.println("Vip seats");
         System.out.println(vipSeats);
         System.out.println("All seats");

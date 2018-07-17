@@ -31,5 +31,4 @@ public class CounterAspect {
     public void buyRequestsCount() {
         counterAOPDao.addBuyRequest();
     }
-
 }

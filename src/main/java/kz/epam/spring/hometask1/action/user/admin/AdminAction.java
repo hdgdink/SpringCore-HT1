@@ -45,8 +45,7 @@ public class AdminAction {
         System.out.println("--b.Show all users");
         System.out.println("--c.Show all events");
         System.out.println("--d.Add new event");
-        System.out.println("--e.See purchased tickets");
-        System.out.println("--f.Log out");
+        System.out.println("--e.Log out");
 
         while (!isChosen) {
             checkAdminMenuInput(scanner.next());
@@ -91,6 +90,7 @@ public class AdminAction {
         user.setBalance(balance);
 
         if (user.getId() == null) {
+
             if (userService.save(user) != null) {
                 System.out.println("New user with name: " + user.getFirstName() + " and email: " + user.getEmail()
                         + " is added");
@@ -268,13 +268,15 @@ public class AdminAction {
 
         while (!isFinished) {
             System.out.println("--Enter the number of available auditorium--");
-            event.assignAuditorium(getLocalDateTime(event), addAuditorium());
+            event.setAuditoriumId(addAuditorium());
+            getLocalDateTime(event);
             System.out.println("----Do you want add one more auditorium?----");
             System.out.println("--a. yes");
             System.out.println("--b. no");
 
             if (scanner.next().equals("a")) {
-                event.assignAuditorium(getLocalDateTime(event), addAuditorium());
+                event.setAuditoriumId(addAuditorium());
+                getLocalDateTime(event);
             } else isFinished = true;
         }
 
@@ -293,16 +295,16 @@ public class AdminAction {
 
     private LocalDateTime getLocalDateTime(Event event) {
         LocalDateTime df = LocalDateTime.now().plusDays(ThreadLocalRandom.current().nextLong(0, 100));
-        event.addAirDateTime(df);
+        event.setAirDates(df);
         return df;
     }
 
-    private Auditorium addAuditorium() {
+    private Long addAuditorium() {
         for (Auditorium auditoriumList : auditoriumService.getAll()) {
             System.out.println("№ " + auditoriumList.getId() + " " + auditoriumList);
         }
 
-        return auditoriumService.getById(scanner.nextLong());
+        return scanner.nextLong();
     }
 
     private void checkAdminMenuInput(String next) {

@@ -16,14 +16,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ComponentScan("kz.epam.spring.hometask1")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AppConfig {
-    //    @Autowired
-//    private DataInitializer dataInitializer;
     @Autowired
     private MenuServiceImpl menuService;
 
-
     @Bean(name = "app")
     public App getApp() {
-        return new App(/*dataInitializer, */menuService);
+        return new App(menuService);
     }
 }

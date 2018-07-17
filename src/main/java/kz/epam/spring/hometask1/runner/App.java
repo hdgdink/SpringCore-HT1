@@ -10,16 +10,12 @@ import org.springframework.context.annotation.ComponentScan;
 public class App {
     private static ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
     private static MenuServiceImpl menuService;
-//    private static DataInitializer dataInitializer;
 
-    public App(/* DataInitializer dataInitializer,*/ MenuServiceImpl menuService) {
+    public App(MenuServiceImpl menuService) {
         App.menuService = menuService;
-      //  App.dataInitializer=dataInitializer;
     }
 
-
     public static void main(String[] args) {
-//        dataInitializer.initData();
         menuService.showMainMenu();
     }
 }

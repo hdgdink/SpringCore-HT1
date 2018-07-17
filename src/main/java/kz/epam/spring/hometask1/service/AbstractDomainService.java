@@ -13,6 +13,7 @@ public interface AbstractDomainService<T extends DomainObject> {
      * @return saved object with assigned id
      */
     public T save(@Nonnull T object);
+
     /**
      * Updating object to storage
      *

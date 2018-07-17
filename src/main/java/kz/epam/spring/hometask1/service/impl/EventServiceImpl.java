@@ -64,7 +64,7 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
         return eventDao.getAll();
     }
 
-    public List<LocalDateTime> getAirDates(String eventName){
+    public List<LocalDateTime> getAirDates(String eventName) {
         return eventDao.getAirDates(eventName);
     }
 
@@ -73,7 +73,8 @@ public class EventServiceImpl implements EventService, AbstractDomainService<Eve
     }
 
     public Boolean checkBookedPlace(Auditorium auditorium, Event event, LocalDateTime dateTime, Long seatNumber) {
-        return getUsedSeats(auditorium, event, dateTime).contains(seatNumber) &&
-                event.getAuditoriums().get(dateTime).equals(auditorium);
+        return getUsedSeats(auditorium, event, dateTime) != null &&
+                getUsedSeats(auditorium, event, dateTime).contains(seatNumber) &&
+                event.getAuditoriumId().equals(auditorium.getId());
     }
 }

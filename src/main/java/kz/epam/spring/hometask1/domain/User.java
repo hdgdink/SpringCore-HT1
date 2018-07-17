@@ -11,7 +11,6 @@ public class User extends DomainObject {
     private String pass;
     private Double balance;
 
-
     public String getPass() {
         return pass;
     }

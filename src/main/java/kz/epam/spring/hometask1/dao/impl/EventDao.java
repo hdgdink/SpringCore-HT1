@@ -89,18 +89,16 @@ public class EventDao implements Dao<Event> {
         return jdbcTemplate.query(GET_ALL_EVENTS, rowMapper);
     }
 
-    public List<LocalDateTime> getAirDates(String name){
+    public List<LocalDateTime> getAirDates(String name) {
         List<LocalDateTime> dates = new ArrayList<>();
         List<Timestamp> timestamps = jdbcTemplate.queryForList(GET_DATES_FOR_EVENT_BY_NAME,
                 new Object[]{name}, Timestamp.class);
 
-        for(Timestamp timestamp : timestamps){
+        for (Timestamp timestamp : timestamps) {
             dates.add(LocalDateTime.ofInstant(timestamp.toInstant(), ZoneOffset.ofHours(6)));
         }
         return dates;
     }
-
-
 
     public Event getEventByName(String name) {
         Event event = jdbcTemplate.queryForObject(GET_EVENT_BY_NAME,

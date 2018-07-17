@@ -99,7 +99,6 @@ public class AuditoriumDao implements Dao<Auditorium> {
         auditorium.setName(rs.getString("name"));
         auditorium.setNumberOfSeats(rs.getLong("NumberOfSeats"));
         auditorium.setRowSize(rs.getInt("rowSize"));
-
         return auditorium;
     };
 }

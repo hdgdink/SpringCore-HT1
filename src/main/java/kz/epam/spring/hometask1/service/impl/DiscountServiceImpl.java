@@ -1,7 +1,5 @@
 package kz.epam.spring.hometask1.service.impl;
 
-import kz.epam.spring.hometask1.domain.Event;
-import kz.epam.spring.hometask1.domain.User;
 import kz.epam.spring.hometask1.service.DiscountService;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
